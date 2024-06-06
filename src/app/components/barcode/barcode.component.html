@@ -1,0 +1,5 @@
+<ion-item>
+  <ion-label>{{label}}</ion-label>
+  <ion-input type="text" name="resultado" [(ngModel)]="campo" (change)="onChange()"></ion-input>
+  <ion-button color="success" (click)="abrirBarcode()"><ion-icon name="camera-outline"></ion-icon></ion-button>
+</ion-item>

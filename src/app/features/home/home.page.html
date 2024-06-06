@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            WMS
+        </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+
+    <ion-list>
+        <ion-item button [routerLink]="['/execucao-ordem-separacao']">
+            <ion-label>
+                <h3>Ordem Serviço de Separação</h3>
+            </ion-label>
+            <ion-icon name="chevron-forward"></ion-icon>
+        </ion-item>
+        <ion-item button (click)="irParaErp('/erp-app-pda/areas/logistica/execucao-wms-ordem-servico-conferencia/index.action')">
+            <ion-label>
+                <h3>Ordem Serviço de Conferência</h3>
+            </ion-label>
+            <ion-icon name="chevron-forward"></ion-icon>
+        </ion-item>
+        <ion-item button>
+            <ion-label>
+                <h3>Ordem Serviço de Carregamento</h3>
+            </ion-label>
+            <ion-icon name="chevron-forward"></ion-icon>
+        </ion-item>
+    </ion-list>
+  
+  </ion-content>

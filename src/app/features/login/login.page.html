@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar [color]="'primary'">
+      <ion-title>
+          Login
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding='true'>
+  <form>
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Empresa</ion-label>
+        <ion-input autocomplete="off" type="text" name="empresa" [(ngModel)]="credenciais.empresa" (change)="validarEmpresa()"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Usuário</ion-label>
+        <ion-input autocomplete="off" type="text" name="usuario" [(ngModel)]="credenciais.usuario"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="stacked">Senha</ion-label>
+        <ion-input autocomplete="off" type="password" name="senha" [(ngModel)]="credenciais.senha"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" share="round" color="success" (click)="loginAction()">Login</ion-button>
+  </form>
+</ion-content>

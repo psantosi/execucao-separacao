@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar [color]="isEscutando ? 'danger' : 'primary'">
+    <ion-buttons slot="start">
+        <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+        Separação
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed" edge *ngIf="ordemServico && ordemServico.wmsOrdemServicoKey !== 0">
+    <ion-fab-button color="{{ voiceAtivo ? 'danger' : 'success'}}" (click)="toggleVoice()">
+      <ion-icon name="{{ iconeBotaoVoice }}"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-card *ngIf="ordemServico && ordemServico.wmsOrdemServicoKey === 0">  
+    <ion-item color="warning">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      <ion-label>Você não possui ordem de serviço.</ion-label>
+    </ion-item>  
+  </ion-card>
+
+  <ion-card *ngIf="ordemServico && ordemServico.wmsOrdemServicoKey !== 0">
+      <ion-card-content>
+          <p>Ordem de serviço: <strong> {{ ordemServico.wmsOrdemServicoKey }}</strong></p>
+          <p>Atividade: <strong> {{ ordemServico.atividade }}</strong></p>
+          <p>Operador: <strong> {{ ordemServico.operador }}</strong></p>
+          <p>Status: <strong> {{ ordemServico.status }}</strong></p>
+      </ion-card-content>
+  </ion-card>
+
+  <ion-button large (click)="iniciar()" *ngIf="!item && ordemServico && ordemServico.wmsOrdemServicoKey !== 0">Iniciar</ion-button>
+
+  <form *ngIf="item" [ngClass]="{'form-item' : voiceAtivo}">
+    <ion-list>
+          <app-barcode label="Unitizador" [campo]="form.unitizador" (onRead)="lerCondigoBarra($event, 'unitizador')"></app-barcode>
+          <ion-item>
+            <ion-label>Endereço: {{ item.enderecoLogisticoDescritivo }}</ion-label>
+          </ion-item>
+          <app-barcode label="Endereço" [campo]="form.endereco" (onRead)="lerCondigoBarra($event, 'endereco')"></app-barcode>
+          <ion-item>
+              <ion-label>{{ item.descricaoProduto }}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="item.codigoReferencia">
+            <ion-label>{{ item.codigoReferencia }}</ion-label>
+          </ion-item>
+          <app-barcode label="Gtin" [campo]="form.gtin" (onRead)="lerCondigoBarra($event, 'gtin')"></app-barcode>
+          <ion-item *ngIf="item.dataValidade">
+              <ion-label>Data validade: {{ item.dataValidade }}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="item.palete">
+            <ion-label>Palete: {{ item.palete }}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="item.lote">
+            <ion-label>Nº do Lote: {{ item.lote }}</ion-label>
+          </ion-item>
+          <ion-item>
+              <ion-label>Quantidade Pedida: {{ item.quantidadePedida }}</ion-label>
+          </ion-item>
+          <ion-item>
+              <ion-label>Qtd separada</ion-label>
+              <ion-input type="number" name="quantidade" [(ngModel)]="form.quantidade"></ion-input>
+          </ion-item>
+      </ion-list>
+
+      <ion-button size="small" (click)="salvar()" *ngIf="item">Salvar</ion-button>
+      <!-- <ion-button size="small" (click)="pausar()" color="danger" *ngIf="item">Pausar</ion-button>
+      <ion-button size="small" (click)="pular()" color="success" *ngIf="item">Pular</ion-button> -->
+      <ion-button size="small" (click)="cortar()" color="danger" *ngIf="item">Cortar</ion-button>
+  </form>
+
+  <app-monitor [mensagem]="log" *ngIf="item && voiceAtivo"></app-monitor>
+</ion-content>
